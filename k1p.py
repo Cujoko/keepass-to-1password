@@ -54,18 +54,6 @@ def run() -> None:
                     value = value.replace(delimeter, '<delimeter>')
                     entry[key] = value
                     
-            # entry['title'] = normalize(entry_xml.title.string)
-            # if entry_xml.username.string:
-            #     entry['username'] = normalize(entry_xml.username.string)
-            # if entry_xml.password.string:
-            #     entry['password'] = normalize(entry_xml.password.string)
-            # if entry_xml.url.string:
-            #     entry['url'] = normalize(entry_xml.url.string.replace('http://', ''))
-            # if entry_xml.comment.contents:
-            #     # Convert <br> to line breaks:
-            #     notes = '\n'.join(element for element in entry_xml.comment.contents if element.name != 'br')
-            #     entry['notes'] = normalize(notes)
-                
             entries.append(entry)
             
     # Prepare output file

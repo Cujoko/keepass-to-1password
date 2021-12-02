@@ -9,7 +9,7 @@ use this script to convert it to a CSV, and then import the CSV into
 Install the following dependencies:
 
 - `pip install beautifulsoup4`
-- `pip install jinja2`
+- `pip install configparser`
 
 ## Usage
 
@@ -27,5 +27,6 @@ Install the following dependencies:
 
 This software is released under the [MIT License](http://opensource.org/licenses/MIT).
 
-- Copyright (c) 2013–2014 [Vincent Stark](http://vstark.net)
-- Copyright (c) 2014 [Daniel Gasienica](http://www.gasi.ch)
+- Copyright © 2013–2014 [Vincent Stark](http://vstark.net)
+- Copyright © 2014 [Daniel Gasienica](http://www.gasi.ch)
+- Copyright © 2021 [Cujo Koltowski](https://github.com/Cujoko)

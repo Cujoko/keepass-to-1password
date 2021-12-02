@@ -3,8 +3,9 @@ name = "keepass-to-1password"
 version = "0.1.0"
 description = ""
 authors = [
+    "Cujo Koltowski <cujoko@gmail.com>", 
     "Daniel Gasienica <daniel@gasienica.ch>", 
-    "Cujoko <cujoko@gmail.com>"
+    "Vincent Stark"
 ]
 
 [tool.poetry.dependencies]
