@@ -9,11 +9,6 @@ import configparser
 import csv
 
 
-# Helper
-def normalize(s):
-    return '"%s"' % s.replace('"', '""')
-    
-    
 def run() -> None:
     # Setup logging
     script_name = os.path.splitext(os.path.basename(__file__))[0]
@@ -38,36 +33,43 @@ def run() -> None:
     entries = []
     delimeter = ';'
     
-    for entry_xml in passwords_xml.find_all('entry'):
-        entry = {}
-        
-        for string_xml in entry_xml.find_all('string'):
-            key = string_xml.key.string
-            value = string_xml.value.string
-            
-            if key and value:
-                key = key.replace(delimeter, '<delimeter>')
-                fields.add(key)
+    for group_xml in passwords_xml.find_all('group'):
+        for entry_xml in group_xml.children:
+            if entry_xml.name != 'entry':
+                continue
                 
-                value = value.replace(delimeter, '<delimeter>')
-                entry[key] = value
-                
-        # entry['title'] = normalize(entry_xml.title.string)
-        # if entry_xml.username.string:
-        #     entry['username'] = normalize(entry_xml.username.string)
-        # if entry_xml.password.string:
-        #     entry['password'] = normalize(entry_xml.password.string)
-        # if entry_xml.url.string:
-        #     entry['url'] = normalize(entry_xml.url.string.replace('http://', ''))
-        # if entry_xml.comment.contents:
-        #     # Convert <br> to line breaks:
-        #     notes = '\n'.join(element for element in entry_xml.comment.contents if element.name != 'br')
-        #     entry['notes'] = normalize(notes)
+            entry = {}
             
-        entries.append(entry)
-        
+            for string_xml in entry_xml.children:
+                if string_xml.name != 'string':
+                    continue
+                    
+                key = string_xml.key.string
+                value = string_xml.value.string
+                
+                if key and value:
+                    key = key.replace(delimeter, '<delimeter>')
+                    fields.add(key)
+                    
+                    value = value.replace(delimeter, '<delimeter>')
+                    entry[key] = value
+                    
+            # entry['title'] = normalize(entry_xml.title.string)
+            # if entry_xml.username.string:
+            #     entry['username'] = normalize(entry_xml.username.string)
+            # if entry_xml.password.string:
+            #     entry['password'] = normalize(entry_xml.password.string)
+            # if entry_xml.url.string:
+            #     entry['url'] = normalize(entry_xml.url.string.replace('http://', ''))
+            # if entry_xml.comment.contents:
+            #     # Convert <br> to line breaks:
+            #     notes = '\n'.join(element for element in entry_xml.comment.contents if element.name != 'br')
+            #     entry['notes'] = normalize(notes)
+                
+            entries.append(entry)
+            
     # Prepare output file
-    with open(config.get('General', 'output'), 'w', encoding='utf-8') as output:
+    with open(config.get('General', 'output'), 'w', encoding='utf-8', newline='') as output:
         dialect = csv.excel
         dialect.delimiter = delimeter
         
@@ -75,9 +77,9 @@ def run() -> None:
         writer.writeheader()
         writer.writerows(entries)
         
-    logger.info('1Password CSV file is written')
-    
-    
+        logger.info('1Password CSV file is written')
+        
+        
 if __name__ == '__main__':
     run()
     
